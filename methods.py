@@ -1,5 +1,3 @@
-
-
 def search_keywords(index, client):
     '''Searches documents in database through the input keywords. 
     Returns maximum 20 results sorted by date or "No results" message.
