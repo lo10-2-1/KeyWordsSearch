@@ -35,6 +35,8 @@ def main():
         elif comm == 'delete':
             methods.delete_by_index(db_name, es)
         elif comm == 'quit':
+            es.indices.delete(index=db_name, ignore=[400, 404])
+            print('Your session is over. Thank you and come again!')
             quit()
         else:
             print('\nIncorrect command. Please try again.\n')
