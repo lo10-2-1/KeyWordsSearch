@@ -48,8 +48,7 @@ def generate_actions(path):
 
 
 def converting(path, client, helper):
-    '''Reads the file through csv.DictReader() and converts it to
-    the ElasticSearch database.
+    '''Reads the .csv file and converts it to the ElasticSearch database.
     '''
     create_index(client)
     number_of_docs = count_docs(path)
