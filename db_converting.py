@@ -51,23 +51,12 @@ def converting(path, client, helper):
     '''Reads the file through csv.DictReader() and converts it to
     the ElasticSearch database.
     '''
-    if path[-4:] != '.csv':
-        return print('Incorrect path or type of file. Try again.')
+    create_index(client)
+    number_of_docs = count_docs(path)
 
-    try:
-        create_index(client)
-        number_of_docs = count_docs(path)
-
-        successes = 0
-        for ok, action in helper(
-            client=client, index='db', actions=generate_actions(path),
-        ):
-            successes += ok
-        print("Database created! Indexed %d/%d documents" % (successes, number_of_docs))
-
-    except FileNotFoundError:
-        print('Incorrect path. Try again.')
-
-
-if __name__ == '__main__':
-    converting()
+    successes = 0
+    for ok, action in helper(
+        client=client, index='db', actions=generate_actions(path),
+    ):
+        successes += ok
+    print("Database created! Indexed %d/%d documents" % (successes, number_of_docs))
