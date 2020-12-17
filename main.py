@@ -12,16 +12,17 @@ def main():
         csv_path = input('Enter csv path: ')
 
         if csv_path[-4:] != '.csv':
-            print('Incorrect path or type of file. Please try again.\n')
+            print('\nIncorrect path or type of file. Please try again.\n')
         else:
             try:
                 db.converting(csv_path, es, streaming_bulk)
                 break
             except FileNotFoundError:
-                print('Incorrect path. Please try again.\n')
+                print('\nIncorrect path. Please try again.\n')
     
     while True:
-        print('''Three commands are available:
+        print('''
+        Three commands are available:
             1. search
             2. delete
             3. quit
@@ -33,10 +34,10 @@ def main():
         elif comm == 'delete':
             methods.delete_by_index(es)
         elif comm == 'quit':
-            es.delete(index='_all')
+            es.delete(index='db')
             quit()
         else:
-            print('Incorrect command. Please try again.\n')
+            print('\nIncorrect command. Please try again.\n')
             
 
 if __name__ == '__main__':

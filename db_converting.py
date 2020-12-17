@@ -57,4 +57,4 @@ def converting(path, client, helper):
         client=client, index='db', actions=generate_actions(path),
     ):
         successes += ok
-    print("Database created! Indexed %d/%d documents\n" % (successes, number_of_docs))
+    print("\nDatabase created! Indexed %d/%d documents\n" % (successes, number_of_docs))
