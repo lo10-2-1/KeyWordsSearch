@@ -1,11 +1,11 @@
 import csv
 
 
-def create_index(client):
+def create_index(index, client):
     '''Creates an index in Elasticsearch.
     '''
     client.indices.create(
-        index="db",
+        index=index,
         body={
             "settings": {"number_of_shards": 1},
             "mappings": {
@@ -46,15 +46,15 @@ def generate_actions(path):
                 yield document
 
 
-def converting(path, client, helper):
+def converting(path, index, client, helper):
     '''Reads the .csv file and converts it to the ElasticSearch database.
     '''
-    create_index(client)
+    create_index(index, client)
     number_of_docs = count_docs(path)
 
     successes = 0
     for ok, action in helper(
-        client=client, index='db', actions=generate_actions(path),
+        client=client, index=index, actions=generate_actions(path),
     ):
         successes += ok
     print("\nDatabase created! Indexed %d/%d documents\n" % (successes, number_of_docs))

@@ -15,7 +15,8 @@ def main():
             print('\nIncorrect path or type of file. Please try again.\n')
         else:
             try:
-                db.converting(csv_path, es, streaming_bulk)
+                db_name = input('Name your database: ')
+                db.converting(csv_path, db_name, es, streaming_bulk)
                 break
             except FileNotFoundError:
                 print('\nIncorrect path. Please try again.\n')
@@ -30,11 +31,10 @@ def main():
         comm = input('What do you want? Print the name of the command: ')
         
         if comm == 'search':
-            methods.search_keywords(es)
+            methods.search_keywords(db_name, es)
         elif comm == 'delete':
-            methods.delete_by_index(es)
+            methods.delete_by_index(db_name, es)
         elif comm == 'quit':
-            es.delete(index='db')
             quit()
         else:
             print('\nIncorrect command. Please try again.\n')
