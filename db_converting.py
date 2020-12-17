@@ -1,5 +1,4 @@
 import csv
-import tqdm
 
 
 def create_index(client):
