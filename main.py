@@ -7,6 +7,8 @@ import db_converting as db
 es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
 CSV_PATH = input('Enter csv path: ')
 
-number_of_docs = db.count_docs(CSV_PATH)
+def main():
+    db = db.converting(CSV_PATH, es)
 
-print(number_of_docs)
+if __name__ == '__main__':
+    main()
