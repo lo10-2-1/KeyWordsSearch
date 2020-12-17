@@ -1,17 +1,12 @@
-import csv
 import json
 from pprint import pprint
 from elasticsearch import helpers, Elasticsearch
 
-# import db_converting as db
+import db_converting as db
 
 es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
-csv_path = input('Enter csv path:')
+CSV_PATH = input('Enter csv path: ')
 
+number_of_docs = db.count_docs(CSV_PATH)
 
-with open(csv_path, encoding='utf-8') as f:
-    reader = csv.DictReader(f)
-    db = helpers.bulk(es, reader, index='id')
-
-for row in db:
-    print(row)
+print(number_of_docs)
