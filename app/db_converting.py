@@ -48,15 +48,15 @@ def generate_actions(path):
 def converting(path, index, client, helper):
     '''Reads the .csv file and converts it to the ElasticSearch database.
     '''
-    # try:
-    create_index(index, client)
-    number_of_docs = count_docs(path)
+    try:
+        create_index(index, client)
+        number_of_docs = count_docs(path)
 
-    successes = 0
-    for ok, action in helper(
-        client=client, index=index, actions=generate_actions(path),
-    ):
-        successes += ok
-    return ("Database created! Indexed %d/%d documents." % (successes, number_of_docs))
-    # except:
-    #     return "Something's happend. Check your file and try again."
+        successes = 0
+        for ok, action in helper(
+            client=client, index=index, actions=generate_actions(path),
+        ):
+            successes += ok
+        return ("Database created! Indexed %d/%d documents." % (successes, number_of_docs))
+    except:
+        return "Something's happend. Check your file and try again."

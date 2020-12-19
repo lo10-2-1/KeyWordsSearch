@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Results of the search</h1>
+
+<p>Found {total_found} documents.<br>
+Last 20 documents are shown.<br>
+id: {hit['_id']},<br>
+date: {source['created_date']},<br>rubrics: {source['rubrics']},<br>text: {source['text']}</p>
+{% endblock %}

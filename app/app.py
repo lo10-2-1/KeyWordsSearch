@@ -12,9 +12,12 @@ es = FlaskElasticsearch(app)
 # es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
 
 
-@app.route('/')
-@app.route('/main')
+@app.route('/', methods=['POST', 'GET'])
+@app.route('/main', methods=['POST', 'GET'])
 def main():
+    if request.method == 'POST':
+        es.indices.delete(index=request.form['db_name'], ignore=[400, 404])
+        return 'Your session is over. Thank you and come again!'
     return render_template('main.html'), 'ok'
 
 
@@ -37,15 +40,23 @@ def search():
     if request.method == 'POST':
         keywords = request.form['search']
         try:
+            methods.search_keywords(db_name, es)
             return redirect
         except:
-            return render_template('base.html'), "Something's gone wrong. Check if your database is downloaded and try again."
+            return "Something's gone wrong. Check if your database is downloaded and try again."
     else:
         return render_template('search.html'), 'ok'
 
 
 @app.route('/delete', methods=['POST', 'GET'])
 def delete():
+    if request.method == 'POST':
+        keywords = request.form['search']
+        try:
+            methods.delete_by_index(db_name, es)
+            return redirect
+        except:
+            return "Something's gone wrong. Check if your database is downloaded and try again."
     return render_template('delete.html'), 'ok'
 
 

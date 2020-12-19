@@ -7,10 +7,10 @@
     <title>KeyWordsSearch</title>
 </head>
 <body>
-    <p style="text-align: center"><button><a href="{{ url_for('download_file') }}">Download database</a></button>
+    <p style="text-align: center"><button><a href="{{ url_for('main') }}">Main page</a></button>
+    <button><a href="{{ url_for('download_file') }}">Download database</a></button>
     <button><a href="{{ url_for('search') }}">Search</a></button>
     <button><a href="{{ url_for('delete') }}">Delete</a></button>
-    <button><a href="{{ url_for('main') }}">Main page</a></button>
     {% block body %}{% endblock %}
 </body>
 </html>

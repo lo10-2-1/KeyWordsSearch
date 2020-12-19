@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Results of the deletion</h1>
+
+<p>Deleted this document:<br>
+date: {res['created_date']},<br>
+rubrics: {res['rubrics']},<br>
+text: {res['text']}</p>
+{% endblock %}

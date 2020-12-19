@@ -23,7 +23,7 @@ def search_keywords(keywords, index, client):
     result_list = list(result['hits']['hits'])
     total_found = result['hits']['total']['value']
     if len(result_list) > 0:
-        return output
+        return result_list, total_found
     else:
         return 'No results. Check your keywords and try again.'
 
@@ -47,11 +47,11 @@ def delete_by_index(index, client):
 
     result = client.search(index=index, body=query_body)
     result = result['hits']['hits']
+    res = result[0]['_source']
+    client.delete(index=index, id=doc_id, refresh=True)
     if len(result) > 0:
-        res = result[0]['_source']
-        print(f"\nDeleting this document...\ndate: {res['created_date']},\nrubrics: {res['rubrics']},\ntext: {res['text']}\n")
-        client.delete(index=index, id=doc_id, refresh=True)
+        return res
     else:
-        print("\nThis document doesn't exist. Check your id and try again.\n")
+        return "This document doesn't exist. Check your id and try again."
 
     
