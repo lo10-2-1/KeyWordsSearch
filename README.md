@@ -35,4 +35,5 @@ Three commands are available:
 ## Notes
 
 In the future this rep will be modified into web-application.
-At the moment its current version is available on the branch Flask.
+
+At the moment its current version is available on the branch ``Flask``.
