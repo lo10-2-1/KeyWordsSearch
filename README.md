@@ -1,4 +1,5 @@
 # KeyWordsSearch
+
 Test assignment. Search in .csv documents with Elasticsearch 7.10.1. Written on Python.
 
 ## Instruction
@@ -29,4 +30,9 @@ Three commands are available:
 
 2. **delete** - at first searches the documents in database through the document id. If document is found, deletes it and sends confirmation to user. Else returns "No results" message. Instructions for user are provided.
 
-3. **quit** - quits the programm deleting the created database from ElasticSearch server. 
+3. **quit** - quits the programm deleting the created database from ElasticSearch server.
+
+## Notes
+
+In the future this rep will be modified into web-application.
+At the moment its current version is available on the branch Flask.
