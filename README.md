@@ -24,11 +24,9 @@ Give your database special name and start.
 ## Options
 
 Three commands are available:
-    1. **search** - searches documents in database through the input keywords. 
-    Returns maximum 20 results sorted by date or "No results" message.
-    Instructions for user are provided.
-    2. **delete** - at first searches the documents in database through the document id. 
-    If document is found, deletes it and sends confirmation to user.
-    Else returns "No results" message.
-    Instructions for user are provided.
-    3. **quit** - auits the program deleting the created database from ElasticSearch server.
+
+1. **search** - searches documents in database through the input keywords. Returns maximum 20 results sorted by date or "No results" message. Instructions for user are provided. 
+
+2. **delete** - at first searches the documents in database through the document id. If document is found, deletes it and sends confirmation to user. Else returns "No results" message. Instructions for user are provided.
+
+3. **quit** - quits the programm deleting the created database from ElasticSearch server. 
