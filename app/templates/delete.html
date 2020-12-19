@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<p>"Delete" command allows you to delete documents from database using document id.<br>
+To perform this command, type document id. You can get it through the "search" command.<br>
+Pay attention to your request. No other symbols except id itself are allowed.</p>
+
+<p>Example: fhgh234fhdhf</p>
+
+<form method="POST">
+    <input type="text">
+    <input type="submit" value="Delete">
+</form>
+{% endblock %}

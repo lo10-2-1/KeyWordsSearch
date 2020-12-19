@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<p>"Search" command allows you to find documents in database using keywords.<br>
+To perform this command, type your keywords using space.<br>
+Pay attention to the language of your database.</p>
+
+<p>Example: job john binary advertisement</p>
+
+<form method="POST">
+    <input type="text" name="search" id="search">
+    <input type="submit" value="Search">
+</form>
+{% endblock %}

@@ -1,6 +1,5 @@
 import csv
 
-
 def create_index(index, client):
     '''Creates an index in Elasticsearch.
     '''
@@ -26,8 +25,8 @@ def count_docs(path):
     and returns number of rows as an integer.
     '''
     with open(path, encoding='utf-8') as f:
-            reader = csv.DictReader(f)
-            return sum([1 for row in reader])
+        reader = csv.DictReader(f)
+        return sum([1 for row in reader])
 
 
 def generate_actions(path):
@@ -49,6 +48,7 @@ def generate_actions(path):
 def converting(path, index, client, helper):
     '''Reads the .csv file and converts it to the ElasticSearch database.
     '''
+    # try:
     create_index(index, client)
     number_of_docs = count_docs(path)
 
@@ -57,4 +57,6 @@ def converting(path, index, client, helper):
         client=client, index=index, actions=generate_actions(path),
     ):
         successes += ok
-    print("\nDatabase created! Indexed %d/%d documents\n" % (successes, number_of_docs))
+    return ("Database created! Indexed %d/%d documents." % (successes, number_of_docs))
+    # except:
+    #     return "Something's happend. Check your file and try again."
