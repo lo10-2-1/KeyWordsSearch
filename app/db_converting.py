@@ -20,20 +20,20 @@ def create_index(index, client):
     )
 
 
-def count_docs(path):
+def count_docs(csv_file):
     '''Reads the file through csv.DictReader()
     and returns number of rows as an integer.
     '''
-    with open(path, encoding='utf-8') as f:
+    with open(csv_file, encoding='utf-8') as f:
         reader = csv.DictReader(f)
         return sum([1 for row in reader])
 
 
-def generate_actions(path):
+def generate_actions(csv_file):
     '''Reads the file through csv.DictReader()
     and yields a single document in index for each row.
     '''
-    with open(path, encoding='utf-8') as f:
+    with open(csv_file, encoding='utf-8') as f:
             reader = csv.DictReader(f)
         
             for row in reader:
@@ -45,18 +45,17 @@ def generate_actions(path):
                 yield document
 
 
-def converting(path, index, client, helper):
+def converting(csv_file, index, client, helper):
     '''Reads the .csv file and converts it to the ElasticSearch database.
     '''
-    try:
-        create_index(index, client)
-        number_of_docs = count_docs(path)
-
-        successes = 0
-        for ok, action in helper(
-            client=client, index=index, actions=generate_actions(path),
-        ):
-            successes += ok
-        return ("Database created! Indexed %d/%d documents." % (successes, number_of_docs))
-    except:
-        return "Something's happend. Check your file and try again."
+    # try:
+    create_index(index, client)
+    number_of_docs = count_docs(csv_file)
+    successes = 0
+    for ok, action in helper(
+        client=client, index=index, actions=generate_actions(csv_file),
+    ):
+        successes += ok
+    return ("Database created! Indexed %d/%d documents." % (successes, number_of_docs))
+    # except:
+    #     return "Something's happened. Check your file and try again."

@@ -11,12 +11,15 @@ app = Flask(__name__)
 es = FlaskElasticsearch(app)
 # es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
 
+ALLOWED_EXTENSIONS = {'csv'}
+USER_DB = ''
+
 
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/main', methods=['POST', 'GET'])
 def main():
     if request.method == 'POST':
-        es.indices.delete(index=request.form['db_name'], ignore=[400, 404])
+        es.indices.delete(index=USER_DB, ignore=[400, 404])
         return 'Your session is over. Thank you and come again!'
     return render_template('main.html'), 'ok'
 
@@ -24,13 +27,12 @@ def main():
 @app.route('/download_file', methods=['POST', 'GET'])
 def download_file():
     if request.method == 'POST':
-        csv_path = request.form['download']
+        csv_file = request.files['download']
         db_name = request.form['db_name']
-        if csv_path[-4:] != '.csv':
-            return 'Incorrect path or type of file. Please try again.'
-        elif csv_path == False or db_name == False:
+        if db_name == False or csv_file == False:
             return 'You forgot to paste data in the forms. Please try again.'
-        result = db.converting(csv_path, db_name, es, streaming_bulk)
+        USER_DB = db_name
+        result = db.converting(csv_file, db_name, es, streaming_bulk)
         return result
     return render_template('download.html'), 'ok'
 

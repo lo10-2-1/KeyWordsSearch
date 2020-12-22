@@ -2,10 +2,8 @@
 
 {% block body %}
 <p>Download your database from .csv file so you can work with it.<br>
-Enter the path to your .csv in the form below. You can copy it from file properties.<br>
-Give your database special name.<br>
+Download your .csv and give your database special name.<br>
 Required columns: text, created_date, rubrics.</p>
-<p>Example: C:\Users\Loopa\Downloads\db.csv</p>
 <form method="POST" enctype="multipart/form-data">
     <input type="file" name="download" id="download">
     <input type="text" name="db_name" id="db_name" placeholder="Enter the name of db">
