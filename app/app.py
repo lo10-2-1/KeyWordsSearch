@@ -6,13 +6,22 @@ from flask_elasticsearch import FlaskElasticsearch
 
 import db_converting as db
 import methods
+import os
+import csv
 
 app = Flask(__name__)
 es = FlaskElasticsearch(app)
 # es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
 
+UPLOAD_FOLDER = '/uploads/'
 ALLOWED_EXTENSIONS = {'csv'}
 USER_DB = ''
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -29,11 +38,17 @@ def download_file():
     if request.method == 'POST':
         csv_file = request.files['download']
         db_name = request.form['db_name']
-        if db_name == False or csv_file == False:
-            return 'You forgot to paste data in the forms. Please try again.'
         USER_DB = db_name
-        result = db.converting(csv_file, db_name, es, streaming_bulk)
-        return result
+        if db_name == False or csv_file.filename == '':
+            return 'You forgot to paste data in the forms. Please try again.'
+        if csv_file and allowed_file(csv_file.filename):
+            filename = csv_file.filename
+            csv_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            csv_path = os.path.join(app.config['UPLOAD_FOLDER']) + filename
+            with open(csv_path, encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                result = db.converting(reader, db_name, es, streaming_bulk)
+                return result
     return render_template('download.html'), 'ok'
 
 
