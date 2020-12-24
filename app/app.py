@@ -13,7 +13,7 @@ app = Flask(__name__)
 es = FlaskElasticsearch(app)
 # es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
 
-UPLOAD_FOLDER = '/uploads/'
+UPLOAD_FOLDER = './uploads/'
 ALLOWED_EXTENSIONS = {'csv'}
 USER_DB = ''
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
