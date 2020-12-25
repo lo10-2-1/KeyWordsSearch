@@ -1,5 +1,3 @@
-import csv
-
 def create_index(index, client):
     '''Creates an index in Elasticsearch.
     '''
@@ -21,15 +19,13 @@ def create_index(index, client):
 
 
 def count_docs(csv_file):
-    '''Reads the file through csv.DictReader()
-    and returns number of rows as an integer.
+    '''Gets .csv and returns number of rows as an integer.
     '''
     return sum([1 for row in csv_file])
 
 
 def generate_actions(csv_file):
-    '''Reads the file through csv.DictReader()
-    and yields a single document in index for each row.
+    '''Gets .csv and yields a single document in index for each row.
     '''
     for row in csv_file:
         document = {
@@ -43,14 +39,14 @@ def generate_actions(csv_file):
 def converting(csv_file, index, client, helper):
     '''Reads the .csv file and converts it to the ElasticSearch database.
     '''
-    # try:
-    create_index(index, client)
-    number_of_docs = count_docs(csv_file)
-    successes = 0
-    for ok, action in helper(
-        client=client, index=index, actions=generate_actions(csv_file),
-    ):
-        successes += ok
-    return ("Database created! Indexed %d/%d documents." % (successes, number_of_docs))
-    # except:
-    #     return "Something's happened. Check your file and try again."
+    try:
+        create_index(index, client)
+        number_of_docs = count_docs(csv_file)
+        successes = 0
+        for ok, action in helper(
+            client=client, index=index, actions=generate_actions(csv_file),
+        ):
+            successes += ok
+        return ("Database created! Indexed %d/%d documents." % (successes, number_of_docs))
+    except:
+        return "Something's happened. Check your file and try again."

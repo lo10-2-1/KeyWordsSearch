@@ -47,7 +47,8 @@ def download_file():
             csv_path = os.path.join(app.config['UPLOAD_FOLDER']) + filename
             with open(csv_path, encoding='utf-8') as f:
                 reader = csv.DictReader(f)
-                result = db.converting(reader, db_name, es, streaming_bulk)
+                read_list = [row for row in reader]
+                result = db.converting(read_list, db_name, es, streaming_bulk)
                 return result
     return render_template('download.html'), 'ok'
 
