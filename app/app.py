@@ -10,6 +10,7 @@ import os
 import csv
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
 es = FlaskElasticsearch(app)
 # es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
 
@@ -39,17 +40,21 @@ def download_file():
         csv_file = request.files['download']
         db_name = request.form['db_name']
         USER_DB = db_name
+
         if db_name == False or csv_file.filename == '':
             return 'You forgot to paste data in the forms. Please try again.'
+
         if csv_file and allowed_file(csv_file.filename):
             filename = csv_file.filename
             csv_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             csv_path = os.path.join(app.config['UPLOAD_FOLDER']) + filename
+
             with open(csv_path, encoding='utf-8') as f:
                 reader = csv.DictReader(f)
                 read_list = [row for row in reader]
                 result = db.converting(read_list, db_name, es, streaming_bulk)
                 return result
+
     return render_template('download.html'), 'ok'
 
 
@@ -57,11 +62,12 @@ def download_file():
 def search():
     if request.method == 'POST':
         keywords = request.form['search']
-        try:
-            methods.search_keywords(db_name, es)
-            return redirect
-        except:
-            return "Something's gone wrong. Check if your database is downloaded and try again."
+        # try:
+        result = methods.search_keywords(keywords, 'proj', es)
+        return result
+        # total_found = result["hits"]["total"]["value"]
+        # except:
+        #     return "Something's gone wrong. Check if your database is downloaded and try again."
     else:
         return render_template('search.html'), 'ok'
 

@@ -1,3 +1,5 @@
+import json
+
 def search_keywords(keywords, index, client):
     '''Searches documents in database through the input keywords. 
     Returns maximum 20 results sorted by date or "No results" message.
@@ -20,10 +22,11 @@ def search_keywords(keywords, index, client):
     }
     
     result = client.search(index=index, body=query_body, size=20)
-    result_list = list(result['hits']['hits'])
-    total_found = result['hits']['total']['value']
+    result_list = result["hits"]["hits"]
+    for doc in result_list:
+        doc["_source"]["text"] = doc["_source"]["text"]
     if len(result_list) > 0:
-        return result_list, total_found
+        return result
     else:
         return 'No results. Check your keywords and try again.'
 
