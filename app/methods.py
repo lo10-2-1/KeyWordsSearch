@@ -9,8 +9,7 @@ def search_keywords(keywords, index, client):
         "query": {
             "match": {
                 "text": {
-                    "query": keywords,
-                    "fuzziness": "AUTO",
+                    "query": keywords
                 }
             }
         },
@@ -23,8 +22,6 @@ def search_keywords(keywords, index, client):
     
     result = client.search(index=index, body=query_body, size=20)
     result_list = result["hits"]["hits"]
-    for doc in result_list:
-        doc["_source"]["text"] = doc["_source"]["text"]
     if len(result_list) > 0:
         return result
     else:
