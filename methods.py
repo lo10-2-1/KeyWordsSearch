@@ -14,8 +14,7 @@ def search_keywords(index, client):
         "query": {
             "match": {
                 "text": {
-                    "query": keywords,
-                    "fuzziness": "AUTO",
+                    "query": keywords
                 }
             }
         },
